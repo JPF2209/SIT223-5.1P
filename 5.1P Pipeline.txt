@@ -1,0 +1,46 @@
+pipeline {
+    agent any
+    environment {
+    	DIRECTORY_PATH         = '/path/to/directory/'
+    	TESTING_ENVIRONMENT    = '/path/to/testing/environment/'
+    	PRODUCTION_ENVIRONMENT = '/path/to/production/environment/'
+    }
+    stages {
+        stage('Build') {
+            steps {
+                echo "fetch the source code from the directory path: ${DIRECTORY_PATH}"
+		        echo 'compile the code and generate any necessary artifacts'
+            }
+        }
+    	stage('Test') {
+            steps {
+                echo 'unit tests'
+		        echo 'integration tests'
+            }
+        }
+	    stage('Code') {
+            steps {
+                echo 'check the quality of the code'
+
+            }
+        }
+	    stage('Deploy') {
+            steps {
+                echo "deploy the application to the testing environment: ${TESTING_ENVIRONMENT}"
+                //sh 'printenv'
+            }
+        }
+	    stage('Approval') {
+            steps {
+                sleep 10
+            }
+        }
+	    stage('Deploy To Production') {
+            steps {
+                // $PRODUCTION_ENVIRONMENT
+                echo "Deploying the code to the production environment: ${PRODUCTION_ENVIRONMENT}"
+                //sh 'printenv'
+            }
+        }
+    }
+}
